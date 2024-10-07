@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechCorp Solutions - Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #2c3e50;
+      --color-secondary: #34495e;
+      --color-accent: #3498db;
+      --color-success: #2ecc71;
+      --color-warning: #f39c12;
+      --color-danger: #e74c3c;
+      --color-background: #ecf0f1;
+      --color-text: #2c3e50;
+      --color-text-light: #7f8c8d;
+    }
+    body {
+      background-color: var(--color-background);
+      color: var(--color-text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .header {
+      background-color: var(--color-primary);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar {
+      background-color: var(--color-secondary);
+      color: #ecf0f1;
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      transition: all 0.3s ease;
+    }
+    .main-content {
+      margin-left: 250px;
+      transition: all 0.3s ease;
+    }
+    .card {
+      background-color: #ffffff;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    .btn {
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .input-field {
+      border: 1px solid #bdc3c7;
+      border-radius: 0.25rem;
+      transition: all 0.3s ease;
+    }
+    .input-field:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+    .text-accent {
+      color: var(--color-accent);
+    }
+    .team-card {
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .team-card:hover {
+      transform: scale(1.05);
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body class="font-sans">
+  <div id="loginPage" class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+      <div>
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          Sign in to TechCorp Solutions
+        </h2>
+      </div>
+      <form class="mt-8 space-y-6" id="loginForm">
+        <input type="hidden" name="remember" value="true">
+        <div class="rounded-md shadow-sm -space-y-px">
+          <div>
+            <label for="username" class="sr-only">Username</label>
+            <input id="username" name="username" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username">
+          </div>
+          <div>
+            <label for="password" class="sr-only">Password</label>
+            <input id="password" name="password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Sign in
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="dashboardPage" class="hidden">
+    <div class="sidebar" id="sidebar">
+      <div class="p-4">
+        <h1 class="text-xl font-bold text-center mb-8">TechCorp Solutions</h1>
+        <nav>
+          <ul class="space-y-2">
+            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200">Dashboard</a></li>
+            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200">Teams</a></li>
+            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200">Projects</a></li>
+            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200">Attendance</a></li>
+            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200">Settings</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="main-content" id="mainContent">
+      <header class="header text-white p-4 flex justify-between items-center">
+        <h2 class="text-2xl font-bold">Dashboard</h2>
+        <div class="flex items-center">
+          <span class="mr-4">Welcome, <span id="userGreeting"></span></span>
+          <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md transition duration-300">
+            Logout
+          </button>
+        </div>
+      </header>
+
+      <div class="container mx-auto mt-8 p-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="teamsGrid">
+          <!-- Teams will be dynamically inserted here -->
+        </div>
+
+        <!-- Section for Team Members' Details -->
+        <div class="card p-6 fade-in mt-8 hidden" id="teamMembersSection">
+          <h3 class="text-xl font-semibold mb-4">Team Members' Details</h3>
+          <div class="overflow-x-auto">
+            <table class="min-w-full bg-white">
+              <thead>
+                <tr>
+                  <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-semibold text-gray-600">Member Name</th>
+                  <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-semibold text-gray-600">Role</th>
+                  <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-semibold text-gray-600">Progress</th>
+                  <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-semibold text-gray-600">Attendance</th>
+                </tr>
+              </thead>
+              <tbody id="teamMembersTable" class="text-gray-700">
+                <!-- Team members data will be dynamically inserted here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const loginPage = document.getElementById("loginPage");
+    const dashboardPage = document.getElementById("dashboardPage");
+    const userGreeting = document.getElementById("userGreeting");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const teamsGrid = document.getElementById("teamsGrid");
+    const teamMembersSection = document.getElementById("teamMembersSection");
+    const teamMembersTable = document.getElementById("teamMembersTable");
+
+    const teamsData = [
+      { teamName: "Development", members: [
+        { name: "John Doe", role: "Developer", progress: "75%", attendance: "95%" },
+        { name: "Jane Doe", role: "Frontend Developer", progress: "85%", attendance: "93%" },
+        { name: "Alice Cooper", role: "Backend Developer", progress: "65%", attendance: "92%" },
+        { name: "Michael Lee", role: "DevOps Engineer", progress: "95%", attendance: "97%" },
+        { name: "Sarah Connor", role: "Full-Stack Developer", progress: "88%", attendance: "90%" }
+      ]},
+      { teamName: "Marketing", members: [
+        { name: "Lucy Green", role: "Marketer", progress: "85%", attendance: "92%" },
+        { name: "Bob Smith", role: "Content Creator", progress: "90%", attendance: "96%" },
+        { name: "Anna Baker", role: "SEO Specialist", progress: "65%", attendance: "94%" },
+        { name: "Tom Brown", role: "PPC Specialist", progress: "80%", attendance: "89%" },
+        { name: "Eve Johnson", role: "Social Media Manager", progress: "85%", attendance: "98%" }
+      ]},
+      { teamName: "Design", members: [
+        { name: "Chris White", role: "UX Designer", progress: "75%", attendance: "90%" },
+        { name: "Matt Black", role: "UI Designer", progress: "85%", attendance: "92%" },
+        { name: "Rachel Grey", role: "Graphic Designer", progress: "65%", attendance: "93%" },
+        { name: "Sophia Brown", role: "Product Designer", progress: "78%", attendance: "91%" },
+        { name: "Emily Davis", role: "Illustrator", progress: "83%", attendance: "95%" }
+      ]},
+      { teamName: "Operations", members: [
+        { name: "James King", role: "Operations Manager", progress: "90%", attendance: "95%" },
+        { name: "Dylan Ford", role: "Operations Executive", progress: "88%", attendance: "97%" },
+        { name: "Olivia Miles", role: "Logistics Coordinator", progress: "70%", attendance: "90%" },
+        { name: "Jake Steele", role: "Supply Chain Manager", progress: "78%", attendance: "89%" },
+        { name: "Emily Parker", role: "Inventory Manager", progress: "85%", attendance: "92%" }
+      ]},
+      { teamName: "Finance", members: [
+        { name: "Harvey Nash", role: "Accountant", progress: "92%", attendance: "98%" },
+        { name: "Megan Hunt", role: "Auditor", progress: "85%", attendance: "96%" },
+        { name: "William Harris", role: "Financial Analyst", progress: "88%", attendance: "95%" },
+        { name: "Sophia Rose", role: "Bookkeeper", progress: "80%", attendance: "92%" },
+        { name: "Charlotte Young", role: "Tax Specialist", progress: "83%", attendance: "94%" }
+      ]}
+    ];
+
+    // Populate Teams Grid
+    teamsGrid.innerHTML = teamsData.map((team, index) => `
+      <div class="card p-4 team-card" onclick="showTeamMembers(${index})">
+        <h3 class="text-lg font-semibold mb-2">${team.teamName}</h3>
+        <p>${team.members.length} Members</p>
+      </div>
+    `).join("");
+
+    // Show Team Members
+    function showTeamMembers(teamIndex) {
+      const selectedTeam = teamsData[teamIndex];
+      teamMembersTable.innerHTML = selectedTeam.members.map((member) => `
+        <tr>
+          <td class="px-6 py-4 border-b border-gray-300">${member.name}</td>
+          <td class="px-6 py-4 border-b border-gray-300">${member.role}</td>
+          <td class="px-6 py-4 border-b border-gray-300">${member.progress}</td>
+          <td class="px-6 py-4 border-b border-gray-300">${member.attendance}</td>
+        </tr>
+      `).join("");
+      teamMembersSection.classList.remove("hidden");
+    }
+
+    // Handle Login
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      if (username === "admin" && password === "password") {
+        loginPage.classList.add("hidden");
+        dashboardPage.classList.remove("hidden");
+        userGreeting.textContent = username;
+      } else {
+        alert("Invalid credentials");
+      }
+    });
+
+    // Handle Logout
+    logoutBtn.addEventListener("click", () => {
+      dashboardPage.classList.add("hidden");
+      loginPage.classList.remove("hidden");
+      loginForm.reset();
+    });
+  </script>
+</body>
+</html>
