@@ -50,48 +50,15 @@
       transform: translateY(-5px);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
-    .btn {
-      transition: all 0.3s ease;
-    }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .input-field {
-      border: 1px solid #bdc3c7;
-      border-radius: 0.25rem;
-      transition: all 0.3s ease;
-    }
-    .input-field:focus {
-      border-color: var(--color-accent);
-      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-    }
-    .text-accent {
-      color: var(--color-accent);
-    }
-    .team-card {
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-    .team-card:hover {
-      transform: scale(1.05);
-    }
-    .fade-in {
-      animation: fadeIn 0.5s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+    .hidden { display: none; }
   </style>
 </head>
 <body class="font-sans">
+
   <div id="loginPage" class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to TechCorp Solutions(id-admin pass-password)
-        </h2>
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">TechCorp</h2>
       </div>
       <form class="mt-8 space-y-6" id="loginForm">
         <input type="hidden" name="remember" value="true">
@@ -105,7 +72,6 @@
             <input id="password" name="password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
           </div>
         </div>
-
         <div>
           <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Sign in
@@ -115,17 +81,18 @@
     </div>
   </div>
 
+
   <div id="dashboardPage" class="hidden">
     <div class="sidebar" id="sidebar">
       <div class="p-4">
-        <h1 class="text-xl font-bold text-center mb-8">TechCorp Solutions</h1>
+        <h1 class="text-xl font-bold text-center mb-8">Tech</h1>
         <nav>
           <ul class="space-y-2">
-            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200">Dashboard</a></li>
-            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200">Teams</a></li>
-            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200">Projects</a></li>
-            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200">Attendance</a></li>
-            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200">Settings</a></li>
+            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200" onclick="navigateTo('dashboardSection')">Dashboard</a></li>
+            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200" onclick="navigateTo('teamsSection')">Teams</a></li>
+            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200" onclick="navigateTo('projectsSection')">Projects</a></li>
+            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200" onclick="navigateTo('attendanceSection')">Attendance</a></li>
+            <li><a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded transition duration-200" onclick="navigateTo('assignTasksSection')">Assign Tasks</a></li>
           </ul>
         </nav>
       </div>
@@ -142,125 +109,296 @@
         </div>
       </header>
 
-      <div class="container mx-auto mt-8 p-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="teamsGrid">
-          <!-- Teams will be dynamically inserted here -->
-        </div>
-
-        <!-- Section for Team Members' Details -->
-        <div class="card p-6 fade-in mt-8 hidden" id="teamMembersSection">
-          <h3 class="text-xl font-semibold mb-4">Team Members' Details</h3>
-          <div class="overflow-x-auto">
-            <table class="min-w-full bg-white">
-              <thead>
-                <tr>
-                  <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-semibold text-gray-600">Member Name</th>
-                  <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-semibold text-gray-600">Role</th>
-                  <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-semibold text-gray-600">Progress</th>
-                  <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-semibold text-gray-600">Attendance</th>
-                </tr>
-              </thead>
-              <tbody id="teamMembersTable" class="text-gray-700">
-                <!-- Team members data will be dynamically inserted here -->
-              </tbody>
-            </table>
+   
+      <div id="dashboardSection" class="container mx-auto mt-8 p-6 hidden">
+        <h3 class="text-xl font-semibold mb-4">Welcome to the Dashboard</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="card p-4">
+            <h4 class="text-lg font-semibold">Total Projects</h4>
+            <p class="text-3xl mt-2">15</p>
+          </div>
+          <div class="card p-4">
+            <h4 class="text-lg font-semibold">Active Teams</h4>
+            <p class="text-3xl mt-2">5</p>
+          </div>
+          <div class="card p-4">
+            <h4 class="text-lg font-semibold">Tasks Completed</h4>
+            <p class="text-3xl mt-2">120</p>
+          </div>
+          <div class="card p-4">
+            <h4 class="text-lg font-semibold">Attendance Rate</h4>
+            <p class="text-3xl mt-2">95%</p>
           </div>
         </div>
+      </div>
+
+
+      <div id="teamsSection" class="container mx-auto mt-8 p-6 hidden">
+        <h3 class="text-xl font-semibold mb-4">Teams Overview</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card p-4 cursor-pointer" onclick="showTeamDetails('teamAlpha')">
+            <h4 class="text-lg font-semibold">Team Alpha</h4>
+            <p>Members: 5</p>
+            <p>Active Projects: 2</p>
+            <p>Lead: Alice Johnson</p>
+          </div>
+          <div class="card p-4 cursor-pointer" onclick="showTeamDetails('teamBeta')">
+            <h4 class="text-lg font-semibold">Team Beta</h4>
+            <p>Members: 5</p>
+            <p>Active Projects: 1</p>
+            <p>Lead: Bob Smith</p>
+          </div>
+          <div class="card p-4 cursor-pointer" onclick="showTeamDetails('teamGamma')">
+            <h4 class="text-lg font-semibold">Team Gamma</h4>
+            <p>Members: 5</p>
+            <p>Active Projects: 3</p>
+            <p>Lead: Charlie Brown</p>
+          </div>
+          <div class="card p-4 cursor-pointer" onclick="showTeamDetails('teamDelta')">
+            <h4 class="text-lg font-semibold">Team Delta</h4>
+            <p>Members: 5</p>
+            <p>Active Projects: 2</p>
+            <p>Lead: Dana White</p>
+          </div>
+          <div class="card p-4 cursor-pointer" onclick="showTeamDetails('teamEpsilon')">
+            <h4 class="text-lg font-semibold">Team Epsilon</h4>
+            <p>Members: 5</p>
+            <p>Active Projects: 1</p>
+            <p>Lead: Eva Green</p>
+          </div>
+        </div>
+
+        <div id="teamDetails" class="mt-8"></div>
+      </div>
+
+
+      <div id="projectsSection" class="container mx-auto mt-8 p-6 hidden">
+        <h3 class="text-xl font-semibold mb-4">Projects Overview</h3>
+        <table class="min-w-full bg-white">
+          <thead>
+            <tr>
+              <th class="py-2 px-4 bg-gray-100">Project Name</th>
+              <th class="py-2 px-4 bg-gray-100">Deadline</th>
+              <th class="py-2 px-4 bg-gray-100">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="py-2 px-4">Website Redesign</td>
+              <td class="py-2 px-4">Oct 15, 2024</td>
+              <td class="py-2 px-4 text-green-500">On Track</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-4">Mobile App Development</td>
+              <td class="py-2 px-4">Nov 1, 2024</td>
+              <td class="py-2 px-4 text-red-500">Delayed</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-4">Server Upgrade</td>
+              <td class="py-2 px-4">Dec 10, 2024</td>
+              <td class="py-2 px-4 text-green-500">On Track</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div id="attendanceSection" class="container mx-auto mt-8 p-6 hidden">
+        <h3 class="text-xl font-semibold mb-4">Attendance Overview</h3>
+        <p>Monthly Attendance Rate</p>
+        <div class="card p-4">
+          <canvas id="attendanceChart"></canvas>
+        </div>
+        <h4 class="mt-6 text-lg font-semibold">Attendance by Team Members</h4>
+        <table class="min-w-full bg-white mt-4">
+          <thead>
+            <tr>
+              <th class="py-2 px-4 bg-gray-100">Member Name</th>
+              <th class="py-2 px-4 bg-gray-100">Attendance (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="py-2 px-4">Alice Johnson</td>
+              <td class="py-2 px-4">95%</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-4">Bob Smith</td>
+              <td class="py-2 px-4">92%</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-4">Charlie Brown</td>
+              <td class="py-2 px-4">90%</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-4">Dana White</td>
+              <td class="py-2 px-4">88%</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-4">Eva Green</td>
+              <td class="py-2 px-4">94%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+   
+      <div id="assignTasksSection" class="container mx-auto mt-8 p-6 hidden">
+        <h3 class="text-xl font-semibold mb-4">Assign Tasks to Teams</h3>
+        <form id="assignTaskForm" class="space-y-4">
+          <div>
+            <label for="teamSelect" class="block text-sm font-medium text-gray-700">Select Team</label>
+            <select id="teamSelect" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+              <option value="teamAlpha">Team Alpha</option>
+              <option value="teamBeta">Team Beta</option>
+              <option value="teamGamma">Team Gamma</option>
+              <option value="teamDelta">Team Delta</option>
+              <option value="teamEpsilon">Team Epsilon</option>
+            </select>
+          </div>
+          <div>
+            <label for="taskDescription" class="block text-sm font-medium text-gray-700">Task Description</label>
+            <textarea id="taskDescription" rows="3" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+          </div>
+          <div>
+            <button type="submit" class="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Assign Task</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const loginForm = document.getElementById("loginForm");
     const loginPage = document.getElementById("loginPage");
     const dashboardPage = document.getElementById("dashboardPage");
     const userGreeting = document.getElementById("userGreeting");
+    const loginForm = document.getElementById("loginForm");
     const logoutBtn = document.getElementById("logoutBtn");
-    const teamsGrid = document.getElementById("teamsGrid");
-    const teamMembersSection = document.getElementById("teamMembersSection");
-    const teamMembersTable = document.getElementById("teamMembersTable");
+    const teamDetailsDiv = document.getElementById("teamDetails");
 
-    const teamsData = [
-      { teamName: "Development", members: [
-        { name: "John Doe", role: "Developer", progress: "75%", attendance: "95%" },
-        { name: "Jane Doe", role: "Frontend Developer", progress: "85%", attendance: "93%" },
-        { name: "Alice Cooper", role: "Backend Developer", progress: "65%", attendance: "92%" },
-        { name: "Michael Lee", role: "DevOps Engineer", progress: "95%", attendance: "97%" },
-        { name: "Sarah Connor", role: "Full-Stack Developer", progress: "88%", attendance: "90%" }
-      ]},
-      { teamName: "Marketing", members: [
-        { name: "Lucy Green", role: "Marketer", progress: "85%", attendance: "92%" },
-        { name: "Bob Smith", role: "Content Creator", progress: "90%", attendance: "96%" },
-        { name: "Anna Baker", role: "SEO Specialist", progress: "65%", attendance: "94%" },
-        { name: "Tom Brown", role: "PPC Specialist", progress: "80%", attendance: "89%" },
-        { name: "Eve Johnson", role: "Social Media Manager", progress: "85%", attendance: "98%" }
-      ]},
-      { teamName: "Design", members: [
-        { name: "Chris White", role: "UX Designer", progress: "75%", attendance: "90%" },
-        { name: "Matt Black", role: "UI Designer", progress: "85%", attendance: "92%" },
-        { name: "Rachel Grey", role: "Graphic Designer", progress: "65%", attendance: "93%" },
-        { name: "Sophia Brown", role: "Product Designer", progress: "78%", attendance: "91%" },
-        { name: "Emily Davis", role: "Illustrator", progress: "83%", attendance: "95%" }
-      ]},
-      { teamName: "Operations", members: [
-        { name: "James King", role: "Operations Manager", progress: "90%", attendance: "95%" },
-        { name: "Dylan Ford", role: "Operations Executive", progress: "88%", attendance: "97%" },
-        { name: "Olivia Miles", role: "Logistics Coordinator", progress: "70%", attendance: "90%" },
-        { name: "Jake Steele", role: "Supply Chain Manager", progress: "78%", attendance: "89%" },
-        { name: "Emily Parker", role: "Inventory Manager", progress: "85%", attendance: "92%" }
-      ]},
-      { teamName: "Finance", members: [
-        { name: "Harvey Nash", role: "Accountant", progress: "92%", attendance: "98%" },
-        { name: "Megan Hunt", role: "Auditor", progress: "85%", attendance: "96%" },
-        { name: "William Harris", role: "Financial Analyst", progress: "88%", attendance: "95%" },
-        { name: "Sophia Rose", role: "Bookkeeper", progress: "80%", attendance: "92%" },
-        { name: "Charlotte Young", role: "Tax Specialist", progress: "83%", attendance: "94%" }
-      ]}
-    ];
+    
+    const teamMembers = {
+      teamAlpha: [
+        { name: "Alice Johnson", role: "Developer", email: "alice@example.com" },
+        { name: "John Doe", role: "Designer", email: "john@example.com" },
+        { name: "Emily Davis", role: "Tester", email: "emily@example.com" },
+        { name: "Michael Brown", role: "Project Manager", email: "michael@example.com" },
+        { name: "Sarah Wilson", role: "Business Analyst", email: "sarah@example.com" },
+      ],
+      teamBeta: [
+        { name: "Bob Smith", role: "Developer", email: "bob@example.com" },
+        { name: "Linda Green", role: "Designer", email: "linda@example.com" },
+        { name: "James White", role: "Tester", email: "james@example.com" },
+        { name: "Karen Black", role: "Project Manager", email: "karen@example.com" },
+        { name: "Tom Clark", role: "Business Analyst", email: "tom@example.com" },
+      ],
+      teamGamma: [
+        { name: "Charlie Brown", role: "Developer", email: "charlie@example.com" },
+        { name: "Jessica Taylor", role: "Designer", email: "jessica@example.com" },
+        { name: "David Wilson", role: "Tester", email: "david@example.com" },
+        { name: "Sophia Martinez", role: "Project Manager", email: "sophia@example.com" },
+        { name: "Daniel Anderson", role: "Business Analyst", email: "daniel@example.com" },
+      ],
+      teamDelta: [
+        { name: "Dana White", role: "Developer", email: "dana@example.com" },
+        { name: "Chris Brown", role: "Designer", email: "chris@example.com" },
+        { name: "Nina Parker", role: "Tester", email: "nina@example.com" },
+        { name: "Robert Lee", role: "Project Manager", email: "robert@example.com" },
+        { name: "Lucy Adams", role: "Business Analyst", email: "lucy@example.com" },
+      ],
+      teamEpsilon: [
+        { name: "Eva Green", role: "Developer", email: "eva@example.com" },
+        { name: "Samuel Hall", role: "Designer", email: "samuel@example.com" },
+        { name: "Mia King", role: "Tester", email: "mia@example.com" },
+        { name: "Liam Wright", role: "Project Manager", email: "liam@example.com" },
+        { name: "Olivia Scott", role: "Business Analyst", email: "olivia@example.com" },
+      ],
+    };
 
-    // Populate Teams Grid
-    teamsGrid.innerHTML = teamsData.map((team, index) => `
-      <div class="card p-4 team-card" onclick="showTeamMembers(${index})">
-        <h3 class="text-lg font-semibold mb-2">${team.teamName}</h3>
-        <p>${team.members.length} Members</p>
-      </div>
-    `).join("");
-
-    // Show Team Members
-    function showTeamMembers(teamIndex) {
-      const selectedTeam = teamsData[teamIndex];
-      teamMembersTable.innerHTML = selectedTeam.members.map((member) => `
-        <tr>
-          <td class="px-6 py-4 border-b border-gray-300">${member.name}</td>
-          <td class="px-6 py-4 border-b border-gray-300">${member.role}</td>
-          <td class="px-6 py-4 border-b border-gray-300">${member.progress}</td>
-          <td class="px-6 py-4 border-b border-gray-300">${member.attendance}</td>
-        </tr>
-      `).join("");
-      teamMembersSection.classList.remove("hidden");
-    }
-
-    // Handle Login
-    loginForm.addEventListener("submit", (event) => {
+    
+    function handleLogin(event) {
       event.preventDefault();
       const username = document.getElementById("username").value;
       const password = document.getElementById("password").value;
-
+      
+      
       if (username === "admin" && password === "password") {
+        userGreeting.innerText = username;
         loginPage.classList.add("hidden");
         dashboardPage.classList.remove("hidden");
-        userGreeting.textContent = username;
       } else {
-        alert("Invalid credentials");
+        alert("Invalid username or password. Please try again.");
       }
-    });
+    }
 
-    // Handle Logout
-    logoutBtn.addEventListener("click", () => {
+    function handleLogout() {
       dashboardPage.classList.add("hidden");
       loginPage.classList.remove("hidden");
       loginForm.reset();
+    }
+
+    function navigateTo(section) {
+      const sections = ['dashboardSection', 'teamsSection', 'projectsSection', 'attendanceSection', 'assignTasksSection'];
+      sections.forEach(sec => document.getElementById(sec).classList.add('hidden'));
+      document.getElementById(section).classList.remove('hidden');
+    }
+
+    function showTeamDetails(team) {
+      const members = teamMembers[team];
+      teamDetailsDiv.innerHTML = `
+        <h4 class="text-lg font-semibold">Team Members</h4>
+        <ul class="mt-4 space-y-2">
+          ${members.map(member => `
+            <li class="p-4 border rounded-lg">
+              <strong>${member.name}</strong> - ${member.role}<br>
+              Email: <a href="mailto:${member.email}" class="text-blue-500">${member.email}</a>
+            </li>
+          `).join('')}
+        </ul>
+      `;
+    }
+
+    loginForm.addEventListener("submit", handleLogin);
+    logoutBtn.addEventListener("click", handleLogout);
+
+    
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    const attendanceChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+        datasets: [{
+          label: 'Attendance (%)',
+          data: [90, 92, 94, 89, 96, 95],
+          backgroundColor: 'rgba(52, 152, 219, 0.2)',
+          borderColor: 'rgba(52, 152, 219, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.dataset.label + ': ' + context.raw + '%';
+              }
+            }
+          },
+        },
+      }
     });
+
+    loginPage.classList.remove("hidden");
   </script>
 </body>
 </html>
